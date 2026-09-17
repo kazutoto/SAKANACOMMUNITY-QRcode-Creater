@@ -1,0 +1,6 @@
+{
+  "name": "サカナコミュ QRコード表示ツール",
+  "description": "サカナコミュのマイページQRコードを表示するためのブックマークレット登録・利用ガイド",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
