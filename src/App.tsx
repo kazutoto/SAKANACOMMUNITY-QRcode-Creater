@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, Apple, Smartphone, Info, ExternalLink, QrCode, Bookmark, MousePointer2, ChevronRight } from 'lucide-react';
 
-const BOOKMARKLET_CODE = `javascript:(function(){const links=document.querySelectorAll('a');let userId=null;const pattern=/\\/sakanaquarium\\/([A-Za-z0-9_-]+)\\/friend/;for(let i=0;i<links.length;i++){if(links[i].href){const match=links[i].href.match(pattern);if(match&&match[1]){userId=match[1];break;}}}if(!userId){alert('%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AA%E3%83%B3%E3%82%AF%E3%81%8C%E8%A6%8B%E3%81%A4%E3%81%8B%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82');return;}if(document.getElementById('qr-overlay-custom'))return;const profileUrl='https://sns.plusmember.jp/sakanaquarium/'+userId+'/mypage';const qrApiUrl='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=%27+encodeURIComponent(profileUrl);const%20overlay=document.createElement(%27div%27);overlay.id=%27qr-overlay-custom%27;overlay.style=%27position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:999999;display:flex;justify-content:center;align-items:center;%27;overlay.innerHTML=%27%3Cdiv%20style=%22background:#fff;padding:20px;border-radius:12px;text-align:center;max-width:85%;box-shadow:0%204px%2012px%20rgba(0,0,0,0.3);box-sizing:border-box;%22%3E%3Ch3%20style=%22margin:0%200%2010px;font-size:16px;color:#333;%22%3E%E3%83%9E%E3%82%A4%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AEQR%E3%82%B3%E3%83%BC%E3%83%89%3C/h3%3E%3Cimg%20src=%22'+qrApiUrl+'%22%20style=%22width:200px;height:200px;display:block;margin:0%20auto%2010px;%22%20/%3E%3Cp%20style=%22font-size:11px;color:#666;word-break:break-all;margin:0%200%2015px;%22%3E'+profileUrl+'%3C/p%3E%3Cbutton%20id=%22close-qr-btn%22%20style=%22padding:10px%2024px;background:#007BFF;color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;%22%3E%E9%96%89%E3%81%98%E3%82%8B%3C/button%3E%3C/div%3E';document.body.appendChild(overlay);document.getElementById('close-qr-btn').onclick=function(){overlay.remove();};})();`;
+const BOOKMARKLET_CODE = `javascript:(function(){if(document.getElementById('qr-overlay-custom'))return;const links=document.querySelectorAll('a');let userId=null;const p1=/\\/sakanaquarium\\/([A-Za-z0-9_-]+)\\/friend/;const p2=/\\/sakanaquarium\\/photo\\/add\\/([A-Za-z0-9_-]+)/;for(let i=0;i<links.length;i++){if(links[i].href){let m=links[i].href.match(p1);if(m&&m[1]){userId=m[1];break;}m=links[i].href.match(p2);if(m&&m[1]){userId=m[1];break;}}}const overlay=document.createElement('div');overlay.id='qr-overlay-custom';overlay.style='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:999999;display:flex;justify-content:center;align-items:center;';let innerHtml='';if(!userId){innerHtml='<div style="background:#fff;padding:20px;border-radius:12px;text-align:center;max-width:85%;box-shadow:0 4px 12px rgba(0,0,0,0.3);box-sizing:border-box;"><h3 style="margin:0 0 10px;font-size:16px;color:#333;">エラー</h3><p style="font-size:14px;color:#666;margin:0 0 15px;">ユーザーIDが見つかりませんでした。</p><a href="https://kazutoto.github.io/SAKANACOMMUNITY-QRcode-Creater/" target="_blank" style="display:block;color:#007BFF;font-size:12px;margin-bottom:15px;word-break:break-all;">https://kazutoto.github.io/SAKANACOMMUNITY-QRcode-Creater/</a><button id="close-qr-btn" style="padding:10px 24px;background:#007BFF;color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;">閉じる</button></div>';}else{const profileUrl='https://sns.plusmember.jp/sakanaquarium/'+userId+'/mypage';const qrApiUrl='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+encodeURIComponent(profileUrl);innerHtml='<div style="background:#fff;padding:20px;border-radius:12px;text-align:center;max-width:85%;box-shadow:0 4px 12px rgba(0,0,0,0.3);box-sizing:border-box;"><h3 style="margin:0 0 10px;font-size:16px;color:#333;">マイページのQRコード</h3><img src="'+qrApiUrl+'" style="width:200px;height:200px;display:block;margin:0 auto 10px;" /><p style="font-size:11px;color:#666;word-break:break-all;margin:0 0 15px;">'+profileUrl+'</p><button id="close-qr-btn" style="padding:10px 24px;background:#007BFF;color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;">閉じる</button></div>';}overlay.innerHTML=innerHtml;document.body.appendChild(overlay);document.getElementById('close-qr-btn').onclick=function(){overlay.remove();};})();`;
 
 export default function App() {
   const [copied, setCopied] = useState(false);
@@ -21,7 +21,7 @@ export default function App() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <QrCode className="w-6 h-6 text-blue-600" />
-            <h1 className="font-bold text-lg text-gray-900">サカナコミュ QR表示ツール</h1>
+            <h1 className="font-bold text-lg text-gray-900">QR作成（SAKANACOMMUNITY)</h1>
           </div>
         </div>
       </header>
@@ -129,7 +129,7 @@ export default function App() {
                       <div className="bg-gray-50 rounded-lg p-3 text-sm space-y-2 mt-2">
                         <div className="flex gap-2">
                           <span className="font-medium text-gray-700 w-12">名前：</span>
-                          <span className="text-gray-900">QR作成（など分かりやすい名前）</span>
+                          <span className="text-gray-900">そのまま（QR作成（SAKANACOMMUNITY)）でOKです</span>
                         </div>
                         <div className="flex gap-2">
                           <span className="font-medium text-gray-700 w-12">URL：</span>
@@ -167,7 +167,7 @@ export default function App() {
                       <div className="bg-gray-50 rounded-lg p-3 text-sm space-y-2 mt-2">
                         <div className="flex gap-2">
                           <span className="font-medium text-gray-700 w-12">名前：</span>
-                          <span className="text-gray-900">QR作成（など分かりやすい名前）</span>
+                          <span className="text-gray-900">そのまま（QR作成（SAKANACOMMUNITY)）でOKです</span>
                         </div>
                         <div className="flex gap-2">
                           <span className="font-medium text-gray-700 w-12">URL：</span>
@@ -220,7 +220,7 @@ export default function App() {
                         <Apple className="w-4 h-4 text-gray-600" />
                         <span className="font-bold text-sm text-gray-700">iPhoneの場合</span>
                       </div>
-                      <p className="text-sm text-gray-600">ブックマーク一覧（本のアイコン）を開き、登録した「QR作成」をタップします。</p>
+                      <p className="text-sm text-gray-600">ブックマーク一覧（本のアイコン）を開き、登録した「QR作成（SAKANACOMMUNITY)」をタップします。</p>
                     </div>
                     
                     <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
@@ -228,7 +228,7 @@ export default function App() {
                         <Smartphone className="w-4 h-4 text-gray-600" />
                         <span className="font-bold text-sm text-gray-700">Androidの場合</span>
                       </div>
-                      <p className="text-sm text-gray-600">アドレスバー（URLが表示されている場所）に「QR作成」と入力し、候補に出てきたブックマークレットをタップします。</p>
+                      <p className="text-sm text-gray-600">アドレスバー（URLが表示されている場所）に「QR作成」などと入力し、候補に出てきたブックマークレットをタップします。</p>
                     </div>
                   </div>
                 </div>
