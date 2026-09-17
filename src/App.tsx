@@ -29,10 +29,15 @@ export default function App() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
         {/* Intro */}
-        <section className="bg-blue-50 border border-blue-100 rounded-xl p-5 sm:p-6 text-sm sm:text-base text-blue-900 leading-relaxed">
+        <section className="bg-blue-50 border border-blue-100 rounded-xl p-5 sm:p-6 text-sm sm:text-base text-blue-900 leading-relaxed space-y-3">
           <p>
-            このページは、サカナコミュ（Sakanaquarium）で簡単にマイページのQRコードを表示するための
-            <strong>ブックマークレット</strong>の登録手順を案内しています。
+            SAKANACOMMUNITYで自分のページをshareするのがちょっと大変です。<br />
+            そこで、簡単にQRコードを表示できるようにするブックマークレットを作りました。
+          </p>
+          <p>
+            最初の登録方法がちょっと大変ですが、<br />
+            登録が出来てしまえば、呼び出すのは簡単なのでお試しください。<br />
+            以下、その登録手順と使い方の説明です。
           </p>
         </section>
 
